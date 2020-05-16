@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using crudmysql.Models;
 using Microsoft.CodeAnalysis.Semantics;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Cors;
 
 namespace crudmysql.Controllers
 {
+    [DisableCors]
     public class UsuarioController : Controller
     {
         private readonly LivroContexto _context;
@@ -79,10 +82,28 @@ namespace crudmysql.Controllers
         //    return View();
         //}
 
+
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //POST: Livros/Create
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateLixo([FromBody]foto recordId)
+        {
+            //if (ModelState.IsValid)
+            //{
+            //    _context.Add(livro);
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToAction(nameof(Index));
+            //}
+            //return View(livro);
+            return Json(recordId);
+        }
+
+
         // POST: Usuario/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
+        // [HttpPost]
         //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(string teste, string nomeRazaoSocial, string email, string telefone,
                                                 string login, string senha, byte[] imagemPerfil, bool coletor, string CEP, string estado,
@@ -227,4 +248,11 @@ namespace crudmysql.Controllers
             return _context.Usuario.Any(e => e.Id == id);
         }
     }
+
+    public class foto
+    {
+        public int recordId { get; set; }
+
+    }
+
 }

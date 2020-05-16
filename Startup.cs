@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using crudmysql.Models;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace crudmysql
 {
+    [DisableCors]
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -47,6 +49,9 @@ namespace crudmysql
 
             app.UseStaticFiles();
             app.UseCors(option => option.AllowAnyOrigin());
+            app.UseCors(op=>op.AllowAnyMethod());
+            app.UseCors(o=>o.AllowAnyHeader());
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
