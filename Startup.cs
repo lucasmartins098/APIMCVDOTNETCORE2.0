@@ -31,13 +31,24 @@ namespace crudmysql
             services.AddDbContext<LivroContexto>(options =>
                 options.UseMySql(connection));
 
-            
+
             services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseCors(option =>
+            {
+                option.AllowAnyOrigin();
+                option.AllowAnyMethod();
+                option.AllowAnyHeader();
+            });
+
+            app.UseCors(option => option.AllowAnyOrigin());
+            app.UseCors(op => op.AllowAnyMethod());
+            app.UseCors(o => o.AllowAnyHeader());
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -48,10 +59,7 @@ namespace crudmysql
             }
 
             app.UseStaticFiles();
-            app.UseCors(option => option.AllowAnyOrigin());
-            app.UseCors(op=>op.AllowAnyMethod());
-            app.UseCors(o=>o.AllowAnyHeader());
-
+           
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
