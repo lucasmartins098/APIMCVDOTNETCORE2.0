@@ -9,6 +9,7 @@ using crudmysql.Models;
 using Microsoft.CodeAnalysis.Semantics;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Cors;
+using System.Text;
 
 namespace crudmysql.Controllers
 {
@@ -87,18 +88,12 @@ namespace crudmysql.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         //POST: Livros/Create
         //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateLixo([FromBody]foto recordId)
+        public async Task<IActionResult> CreateLixo([FromBody]Lixo record)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    _context.Add(livro);
-            //    await _context.SaveChangesAsync();
-            //    return RedirectToAction(nameof(Index));
-            //}
-            //return View(livro);
-            return Json(recordId);
-        }
+            byte[] bytes = Encoding.ASCII.GetBytes(record.image);
 
+            return Json(record);
+        }
 
         // POST: Usuario/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -249,10 +244,11 @@ namespace crudmysql.Controllers
         }
     }
 
-    public class foto
+    public class Lixo
     {
-        public int recordId { get; set; }
-
+        public string Residuo { get; set; }
+        public string image { get; set; }
+        public string DescricaoResiduo { get; set; }
     }
 
 }
